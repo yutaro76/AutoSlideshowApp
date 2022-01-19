@@ -19,7 +19,7 @@ import java.util.logging.Logger.global
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
-    private val v: View? = null
+
 
     //    private val resolver = contentResolver
 //    private val cursor1: resolver.query(
@@ -56,11 +56,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
                     PERMISSIONS_REQUEST_CODE
                 )
-                forward_button.isEnabled = false
-                    backward_button.isEnabled = false
-                    play_pause_button.isEnabled = false
-                    Snackbar.make(v!!, "アクセスを許可してください", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show()
             }
             // Android 5系以下の場合
         } else {
@@ -76,15 +71,35 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             PERMISSIONS_REQUEST_CODE ->
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    getContentsInfo()
+                    Log.d("ANDROID", "許可された")
+                } else {
+                    forward_button.isEnabled = false
+                    backward_button.isEnabled = false
+                    play_pause_button.isEnabled = false
+
+                    val view: View = findViewById(android.R.id.content)
+
+                    val snackbar = Snackbar.make(view, "アクセスを許可してください", Snackbar.LENGTH_LONG)
+                    snackbar.show()
                 }
         }
     }
+
+//    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+//        when (requestCode) {
+//            PERMISSIONS_REQUEST_CODE ->
+//                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    getContentsInfo()
+//                }
+//        }
+//    }
 //    override fun onRequestPermissionsResult(
 //        requestCode: Int,
 //        permissions: Array<String>,
