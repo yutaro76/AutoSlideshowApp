@@ -77,7 +77,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         when (requestCode) {
             PERMISSIONS_REQUEST_CODE ->
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Log.d("ANDROID", "許可された")
+                    val resolver = contentResolver
+                    cursor = resolver.query(
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, // データの種類
+                        null, // 項目（null = 全項目）
+                        null, // フィルタ条件（null = フィルタなし）
+                        null, // フィルタ用パラメータ
+                        null // ソート (nullソートなし）
+                    )
+
                 } else {
                     forward_button.isEnabled = false
                     backward_button.isEnabled = false
